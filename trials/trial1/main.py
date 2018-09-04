@@ -260,35 +260,22 @@ def test(test_loader, model):
         filepath = os.path.splitext(os.path.basename(filepath[0]))[0]
         filepath = int(filepath)
 
-        with torch.no_grad():
-          image_var = torch.autograd.Variable(images) #, volatile=True)
-          y_pred = model(image_var)
-          # get the index of the max log-probability
-          smax = nn.Softmax()
-          smax_out = smax(y_pred)[0]
-          cat_prob = smax_out.data[0]
-          dog_prob = smax_out.data[1]
-          #prob = dog_prob
-          if cat_prob > dog_prob:
-              prob = 1 - cat_prob
-          prob = np.around(prob, decimals=4)
-          prob = np.clip(prob, .0001, .999)
-          prob = np.float(prob)
-          #prob = np.around(prob, decimals=0)
-          csv_map[filepath] = prob
-          
-          #if cat_prob > dog_prob: label = 0 # 0 - cat. 1 - dog.
-          #else: label = 1
-          #csv_map[filepath] = label    
-    # print("{},{}".format(filepath, prob))
+        image_var = torch.autograd.Variable(images, volatile=True)
+        y_pred = model(image_var)
+        # get the index of the max log-probability
+        smax = nn.Softmax()
+        smax_out = smax(y_pred)[0]
+        cat_prob = smax_out.data[0]
+        dog_prob = smax_out.data[1]
+        prob = dog_prob
+        if cat_prob > dog_prob:
+            prob = 1 - cat_prob
+        prob = np.around(prob, decimals=4)
+        prob = np.clip(prob, .0001, .999)
+        csv_map[filepath] = prob
+        # print("{},{}".format(filepath, prob))
 
-    # The following error occured:
-    ## csv_w.writerow(('id', 'label')) 
-    ## TypeError: a bytes-like object is required, not 'str'
-    #
-    # To fix the error, I've (ML) changed 'wb' to 'w' in the line that starts: "with open(...". 
-
-    with open(os.path.join(args.data, 'entry.csv'), 'w') as csvfile:
+    with open(os.path.join(args.data, 'entry.csv'), 'wb') as csvfile:
         fieldnames = ['id', 'label']
         csv_w = csv.writer(csvfile)
         csv_w.writerow(('id', 'label'))

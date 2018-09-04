@@ -1,38 +1,22 @@
+# Important Note
 
+Currently, `launch.sh` and `resume.sh` are broken. They should be easily fixable, however.
 
-Example of network fine-tuning in pytorch for the kaggle competition [Dogs vs. Cats Redux: Kernels Edition](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/)
+## Objective
 
-Currently #27 (`0.05074`) on the [leaderboard](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/leaderboard). 
+Creates an `entry.csv` that can be submitted to [Dogs vs. Cats Redux: Kernels Edition](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/).
 
-## Data prep work
+## Differences from parent repository
 
-```bash
-    # unzip!
-    unzip train.zip
-    unzip test.zip
-    # prep train directory and split train/trainval
-    mv train/ catdog
-    cd catdog
-    # sanity check
-    find . -type f -name 'cat*' | wc -l # 12500
-    find . -type f -name 'dog*' | wc -l # 12500
-    mkdir -p train/dog
-    mkdir -p train/cat
-    mkdir -p val/dog
-    mkdir -p val/cat
-    # Randomly move 90% into train and val, 
-    # if reproducability is important you can pass in a source to shuf
-    find . -name "cat*" -type f | shuf -n11250 | xargs -I file mv file train/cat/
-    find . -maxdepth 1 -type f -name 'cat*'| xargs -I file mv file val/cat/
-    # now dogs
-    find . -name "dog*" -type f | shuf -n11250 | xargs -I file mv file train/dog/
-    find . -maxdepth 1 -type f -name 'dog*'| xargs -I file mv file val/dog/
+This fork contains several differences from the parent repository. The main ones are:
+- Some deprecated functionality was replaced with modern code in `main.py`. The overall output should still be the same.
+- Added `copy.f`, which allows copying current data to a chosen folder in `trials/`.
 
-    # requires gnu utils (brew install coreutils)
-    # use gmv instead of mv on osx
-    echo cat*.jpg | xargs mv -t cat
-    echo dog*.jpg | xargs mv -t dog
-```
+## Quick-start
 
-
-[See also](https://github.com/pytorch/examples)
+1. Download the data from [Dogs vs. Cats Redux: Kernels Edition](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/) and save to the root folder.
+2. Run `prepare_data.sh` to prepare the `data` folder.
+2. Run `launch.sh` after changing passed arguments to the desired values. Be sure to also look at the passed arguments in `resume.sh`.
+3. It will run in the background, and will stop after an error or after the number of epochs has been reached.
+4. To test the generated model, run `test.sh`.
+5. To resume the program after it was stopped, run `resume.sh`.
