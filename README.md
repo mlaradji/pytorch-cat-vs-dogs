@@ -1,6 +1,6 @@
 # Important Note
 
-Currently, `launch.sh` and `resume.sh` are broken. They should be easily fixable, however.
+Currently, `test.sh`, `launch.sh` and `resume.sh` are broken. They should be easily fixable, however.
 
 ## Objective
 
