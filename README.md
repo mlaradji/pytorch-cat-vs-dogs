@@ -4,9 +4,10 @@ Creates an `entry.csv` that can be submitted to [Dogs vs. Cats Redux: Kernels Ed
 
 ## Differences from parent repository
 
-This fork contains several differences from the parent repository. The main ones are:
+This fork contains several differences from the parent repository (https://github.com/desimone/pytorch-cat-vs-dogs). The main ones are:
 - Some deprecated functionality was replaced with modern code in `main.py`. The overall output should still be the same.
 - Added `copy.f`, which allows copying current data to a chosen folder in `trials/`.
+- Added `launch.sh`, `resume.sh` and `test.sh`, which provide useful shortcuts.
 
 ## Quick-start
 
