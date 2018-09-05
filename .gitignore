@@ -3,3 +3,4 @@ data
 *.tar
 nohup.out
 *.old
+git_push.sh

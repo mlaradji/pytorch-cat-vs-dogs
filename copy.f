@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Change the working directory.
+# Change the working directory to the folder containing `copy.f`.
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
