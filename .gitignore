@@ -4,3 +4,5 @@ data
 nohup.out
 *.old
 git_push.sh
+.directory
+
